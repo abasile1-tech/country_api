@@ -1,14 +1,8 @@
-import { useState } from "react";
 import "./App.css";
+import { useState } from "react";
 
 function App() {
-  const [countries, setCountries] = useState("");
-
-  // const fetchDog = () => {
-  //   fetch("https://dog.ceo/api/breeds/image/random")
-  //     .then((response) => response.json())
-  //     .then((data) => setDogImgUrl(data.message));
-  // };
+  const [countries, setCountries] = useState([]);
 
   const fetchCountries = async () => {
     const response = await fetch("https://restcountries.com/v3.1/all");
@@ -16,19 +10,15 @@ function App() {
     setCountries(data);
   };
 
-  const showACountry = () => {
-    console.log(countries[0].name.official);
-  };
-
-  fetchCountries();
+  const countryItems = countries.map((country, i) => {
+    return <li key={i}>{country.name.common}</li>;
+  });
 
   return (
     <>
-      <div id="app">
-        <h1>Country</h1>
-        <button onClick={showACountry}>Gimme a country!</button>
-        {/* <p>{country}</p> */}
-      </div>
+      <h1>Countries of the World</h1>
+      <button onClick={fetchCountries}>Gimme the countries!</button>
+      <ul id="app">{countryItems}</ul>
     </>
   );
 }
