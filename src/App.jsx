@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [countries, setCountries] = useState("");
+
+  // const fetchDog = () => {
+  //   fetch("https://dog.ceo/api/breeds/image/random")
+  //     .then((response) => response.json())
+  //     .then((data) => setDogImgUrl(data.message));
+  // };
+
+  const fetchCountries = async () => {
+    const response = await fetch("https://restcountries.com/v3.1/all");
+    const data = await response.json();
+    console.log("data:", data);
+    console.log("data[0]:", data[0]);
+    console.log("data[0].name.official:", data[0].name.official);
+    setCountries(data);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div id="app">
+        <h1>Country</h1>
+        <button onClick={fetchCountries}>Gimme the countries!</button>
+        {/* <p>{country}</p> */}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
